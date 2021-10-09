@@ -20,7 +20,7 @@ fun Route.randomVocabulary() {
     get("/randomwords") {
         call.respond(
             HttpStatusCode.OK,
-            words.random()
+            words
         )
     }
 }
