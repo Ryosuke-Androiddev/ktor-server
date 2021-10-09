@@ -5,5 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Vocabulary(
     val word: String,
-    val description: String
+    val description: String,
+    val imageUrl: String
 )
