@@ -1,0 +1,1 @@
+web: build/install/com.example.ktor-crud/bin/com.example.ktor-crud

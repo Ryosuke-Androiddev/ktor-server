@@ -1,21 +1,19 @@
 package com.example.plugins
 
-import com.example.route.randomVocabulary
+import com.example.repository.VocabularyRepository
+import com.example.route.getWords
 import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.content.*
 import io.ktor.http.content.*
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
+import io.ktor.locations.*
 
-fun Application.configureRouting() {
-    
+@KtorExperimentalLocationsAPI
+fun Application.configureRouting(wordRepo: VocabularyRepository) {
 
     routing {
-        randomVocabulary()
+        getWords(wordRepo)
         // Static plugin. Try to access `/static/index.html`
-        static("/static") {
+        static{
             resources("static")
         }
     }
