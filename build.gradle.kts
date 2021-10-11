@@ -44,4 +44,18 @@ dependencies {
     // https://mvnrepository.com/artifact/org.ktorm/ktorm-core
     implementation("org.ktorm:ktorm-core:3.4.1")
 
+    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-core
+    implementation("org.jetbrains.exposed:exposed-core:0.35.1")
+
+    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-jdbc
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.35.1")
+
+    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed-dao
+    implementation("org.jetbrains.exposed:exposed-dao:0.35.1")
+
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.2.24")
+
+    // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
+    implementation("com.zaxxer:HikariCP:5.0.0")
 }
