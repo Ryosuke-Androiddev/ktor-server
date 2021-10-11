@@ -58,4 +58,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
     implementation("com.zaxxer:HikariCP:5.0.0")
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testImplementation("com.h2database:h2:1.4.200")
 }

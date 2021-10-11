@@ -1,61 +1,47 @@
 package com.example.route
 
-import com.example.model.Room
-import com.example.model.Vocabulary
-import com.example.model.table.RoomTable
-import com.example.model.table.VocabularyTable
-import com.example.repository.DatabaseConnection
+
+import com.example.repository.VocabularyRepository
+import com.example.utility.Constants.GET_ROOM
+import com.example.utility.Constants.GET_WORD_LIST
 import io.ktor.application.*
 import io.ktor.http.*
+import io.ktor.locations.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import org.ktorm.dsl.*
 
-fun Route.getWords(){
+@KtorExperimentalLocationsAPI
+@Location(GET_ROOM)
+class GetRoom
 
-    val db = DatabaseConnection.database
+@KtorExperimentalLocationsAPI
+fun Route.getWords(
+    wordRepo: VocabularyRepository
+){
 
-    route("/words"){
+    get<GetRoom> {
 
-        get {
-            val room = db.from(RoomTable).select()
-                .map {
-                    val roomId = it[RoomTable.roomId]
-                    val roomName = it[RoomTable.roomName]
-                    val description = it[RoomTable.description]
-                    val isStudying = it[RoomTable.isStudying]
-                    val isFinished = it[RoomTable.isFinished]
-                    Room(
-                        roomId = roomId ?: 0,
-                        roomName = roomName ?: "",
-                        description = description ?: "",
-                        isStudying = isStudying ?: false,
-                        isFinished = isFinished ?: false
-                    )
-                }
-            call.respond(HttpStatusCode.OK,room)
+        try {
+            val roomList = wordRepo.getAllRoom()
+            call.respond(HttpStatusCode.OK,roomList)
+        } catch (e: Throwable) {
+            call.respondText("${e.message}")
         }
+    }
 
-        get("/{roomId}") {
-            val roomId = call.parameters["roomId"]?.toInt() ?: -1
-            val words = db.from(VocabularyTable)
-                .select()
-                .where { VocabularyTable.roomId eq  roomId }
-                .map {
-                    val word = it[VocabularyTable.word]
-                    val meaning = it[VocabularyTable.meaning]
-                    val imageUrl = it[VocabularyTable.imageUrl]
-                    val isCorrect = it[VocabularyTable.isCorrect]
-                    val roomId = it[VocabularyTable.roomId]
-                    Vocabulary(
-                        word = word ?: "",
-                        meaning = meaning ?: "",
-                        imageUrl = imageUrl ?: "",
-                        isCorrect = isCorrect ?: false,
-                        roomId = roomId ?: 0
-                    )
-                }
-            call.respond(HttpStatusCode.OK,words)
+    get("$GET_ROOM/{roomId}") {
+        val roomId = call.parameters["roomId"] ?: return@get call.respondText("Nothing", status = HttpStatusCode.Unauthorized)
+
+        //受け取ったパラメータを数字に直す必要がある
+        val wordList = wordRepo.getWordListByRoomId(roomId.toInt())
+        try {
+            if (wordList.isEmpty()){
+                call.respondText("Not Found")
+            } else {
+                call.respond(HttpStatusCode.OK,wordList)
+            }
+        } catch (e: Throwable){
+            call.respondText("${e.message}")
         }
     }
 }

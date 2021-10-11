@@ -1,15 +1,15 @@
 package com.example.model.table
 
-import org.ktorm.schema.Table
-import org.ktorm.schema.boolean
-import org.ktorm.schema.int
-import org.ktorm.schema.varchar
+import org.jetbrains.exposed.sql.Table
 
-object RoomTable: Table<Nothing>("room") {
 
-    val roomId = int("roomId").primaryKey()
-    val roomName = varchar("roomName")
-    val description = varchar("description")
-    var isStudying = boolean("isStudying")
-    var isFinished = boolean("isFinished")
+object RoomTable: Table() {
+
+    val roomId = integer("roomId")
+    val roomName = varchar("roomName",30)
+    val description = varchar("description",512)
+    var isStudying = bool("isStudying")
+    var isFinished = bool("isFinished")
+
+    override val primaryKey: PrimaryKey = PrimaryKey(roomId)
 }
