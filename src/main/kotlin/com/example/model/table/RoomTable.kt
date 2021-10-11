@@ -1,6 +1,5 @@
 package com.example.model.table
 
-import com.example.model.table.VocabularyTable.primaryKey
 import org.ktorm.schema.Table
 import org.ktorm.schema.boolean
 import org.ktorm.schema.int

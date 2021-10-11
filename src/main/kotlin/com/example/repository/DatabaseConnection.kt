@@ -10,5 +10,4 @@ object DatabaseConnection {
         user = "root",
         password = "MySQL0819NRyoSagaU23!"
     )
-
 }
