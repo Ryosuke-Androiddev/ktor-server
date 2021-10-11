@@ -3,7 +3,6 @@ package com.example.route
 
 import com.example.repository.VocabularyRepository
 import com.example.utility.Constants.GET_ROOM
-import com.example.utility.Constants.GET_WORD_LIST
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
